@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="service_account" />
+        <module name="service_payment" />
+        <module name="basearc_gateway" />
+        <module name="service_security" />
+        <module name="basearc_registy" />
+        <module name="basearc_configuration" />
+        <module name="library_infrastructure" />
+        <module name="service_warehouse" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="basearc_configuration" options="-parameters" />
+      <module name="basearc_gateway" options="-parameters" />
+      <module name="basearc_registy" options="-parameters" />
+      <module name="bookstore_springcloud" options="-parameters" />
+      <module name="library_infrastructure" options="-parameters" />
+      <module name="service_account" options="-parameters" />
+      <module name="service_payment" options="-parameters" />
+      <module name="service_security" options="-parameters" />
+      <module name="service_warehouse" options="-parameters" />
+    </option>
+  </component>
+</project>

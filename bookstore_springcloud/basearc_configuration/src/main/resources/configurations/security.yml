@@ -1,0 +1,33 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${REGISTRY_HOST:localhost}:${REGISTRY_PORT:8761}/eureka/
+
+server:
+  port: ${PORT:8084}
+
+security:
+  oauth2:
+    client:
+      # OAuth的ClientID和ClientSecret是写在OAuthClientDetailsService中的
+      # 实际生产中要考虑好如何获取验证服务器的Endpoint、动态增加微服务客户端、如何分发客户端密钥等问题，而在演示工程中并不关注这些
+      clientId: security
+      clientSecret: security_secret
+      accessTokenUri: http://localhost:${PORT:8084}/oauth/token
+      grant-type: client_credentials
+      scope: SERVICE
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/bookstore?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(-){faint} %clr([%t]){faint} %clr(%-40logger{39}){cyan}[%line]%clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+  level:
+    root: INFO

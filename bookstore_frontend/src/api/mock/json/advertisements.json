@@ -1,0 +1,17 @@
+[
+  {
+    "id": "fenix",
+    "image": "/static/carousel/fenix2.png",
+    "productId": 8
+  },
+  {
+    "id": "ai",
+    "image": "/static/carousel/ai.png",
+    "productId": 2
+  },
+  {
+    "id": "jvm",
+    "image": "/static/carousel/jvm3.png",
+    "productId": 1
+  }
+]

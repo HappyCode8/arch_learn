@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyj.mapper.ProductMapper">
+
+    <resultMap id="BaseResultMap" type="com.wyj.entity.Product">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="price" column="price" jdbcType="DECIMAL"/>
+            <result property="rate" column="rate" jdbcType="FLOAT"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="cover" column="cover" jdbcType="VARCHAR"/>
+            <result property="detail" column="detail" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,price,
+        rate,description,cover,
+        detail
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+            id,title,price,
+            rate,description,cover,
+            detail
+        from product
+        where is_visible=true;
+    </select>
+    <select id="selectOneById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        where
+        id = #{id,jdbcType=NUMERIC} and is_visible=true;
+    </select>
+    <update id="updateIsVisibleById">
+        update product
+        set is_visible = #{isVisible,jdbcType=BOOLEAN}
+        where id = #{id,jdbcType=NUMERIC}
+    </update>
+    <update id="updateSelectiveById">
+        update product
+        <set>
+            <if test="title != null">title=#{title,jdbcType=VARCHAR},</if>
+            <if test="price != null">price=#{price,jdbcType=NUMERIC},</if>
+            <if test="rate != null">rate=#{rate,jdbcType=DECIMAL},</if>
+            <if test="description != null">description=#{description,jdbcType=VARCHAR},</if>
+            <if test="cover != null">cover=#{cover,jdbcType=VARCHAR},</if>
+            <if test="detail != null">detail=#{detail,jdbcType=VARCHAR},</if>
+            <if test="isVisible != null">is_visible=#{isVisible,jdbcType=BOOLEAN},</if>
+        </set>
+        where id = #{id,jdbcType=NUMERIC}
+    </update>
+    <insert id="insertSelective">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="price != null">price,</if>
+            <if test="rate != null">rate,</if>
+            <if test="description != null">description,</if>
+            <if test="cover != null">cover,</if>
+            <if test="detail != null">detail,</if>
+            <if test="isVisible != null">is_visible,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="title != null">#{title,jdbcType=VARCHAR},</if>
+            <if test="price != null">#{price,jdbcType=DECIMAL},</if>
+            <if test="rate != null">#{rate,jdbcType=FLOAT},</if>
+            <if test="description != null">#{description,jdbcType=VARCHAR},</if>
+            <if test="cover != null">#{cover,jdbcType=VARCHAR},</if>
+            <if test="detail != null">#{detail,jdbcType=VARCHAR},</if>
+            <if test="isVisible != null">#{isVisible,jdbcType=BOOLEAN},</if>
+        </trim>
+    </insert>
+    <select id="selectAllByIdIn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product
+        where
+        id in
+        <foreach collection="idList" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=NUMERIC}
+        </foreach>
+    </select>
+</mapper>

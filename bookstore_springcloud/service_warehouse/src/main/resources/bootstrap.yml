@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: warehouse
+  cloud:
+    config:
+      uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:8082}
+      fail-fast: true
+      password: ${CONFIG_PASS:dev}
+      username: user

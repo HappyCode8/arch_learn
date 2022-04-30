@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyj.payment.mapper.WalletMapper">
+
+    <resultMap id="BaseResultMap" type="com.wyj.payment.entity.Wallet">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="money" column="money" jdbcType="DECIMAL"/>
+            <result property="accountId" column="account_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,money,account_id
+    </sql>
+    <select id="selectOneByAccountId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wallet
+        where
+        account_id = #{accountId,jdbcType=NUMERIC}
+    </select>
+    <insert id="insertSelective">
+        insert into wallet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="money != null">money,</if>
+            <if test="accountId != null">account_id,</if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="money != null">#{money,jdbcType=DECIMAL},</if>
+            <if test="accountId != null">#{accountId,jdbcType=BIGINT},</if>
+        </trim>
+    </insert>
+    <update id="updateMoneyByAccountId">
+        update wallet
+        set money = #{money,jdbcType=DECIMAL}
+        where account_id = #{accountId,jdbcType=NUMERIC}
+    </update>
+</mapper>

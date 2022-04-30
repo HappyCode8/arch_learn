@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyj.warehouse.mapper.StockpileMapper">
+    <resultMap id="BaseResultMap" type="com.wyj.entity.Stockpile">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="amount" column="amount" jdbcType="INTEGER"/>
+            <result property="frozen" column="frozen" jdbcType="INTEGER"/>
+            <result property="productId" column="product_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,amount,frozen,
+        product_id
+    </sql>
+
+    <update id="updateAmountByProductId">
+        update stockpile
+        set amount = #{amount,jdbcType=NUMERIC}
+        where product_id = #{productId,jdbcType=NUMERIC}
+    </update>
+    <select id="selectOneByProductId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stockpile
+        where
+        product_id = #{productId,jdbcType=NUMERIC}
+    </select>
+    <update id="updateAmountAndFrozenByProductId">
+        update stockpile
+        set amount = #{amount,jdbcType=NUMERIC},
+            frozen = #{frozen,jdbcType=NUMERIC}
+        where product_id = #{productId,jdbcType=NUMERIC}
+    </update>
+    <update id="updateFrozenByProductId">
+        update stockpile
+        set frozen = #{frozen,jdbcType=NUMERIC}
+        where product_id = #{productId,jdbcType=NUMERIC}
+    </update>
+</mapper>
